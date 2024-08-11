@@ -24,7 +24,6 @@ uint8_t fifo_write_flag = RX_FIFO_NOT_FULL, process_flag=DSP_NO_SAMPLE;
 float32_t output_FIR [LENGTH_INPUT_SIG+LENGTH_FIR_LOWPASS_RESPONSE-1];
 
 
-extern float32_t impulse_response[LENGTH_IMPULSE_RESPONSE];
 extern float32_t FIR_lowpass_response[LENGTH_FIR_LOWPASS_RESPONSE];
 extern float32_t FIR_highpass_response[LENGTH_FIR_HIGHPASS_RESPONSE];
 
@@ -116,7 +115,7 @@ void convolution(rx_fifo_type * input_sig,float32_t * impulse_response_sig,float
 
 	 	 for(j=0;j<length_impulse_response;j++){
 
-	 		 output_sig[i+j]=output_sig[i+j]+input_sig[i]*impulse_response[j];
+	 		 output_sig[i+j]=output_sig[i+j]+input_sig[i]*impulse_response_sig[j];
 
 		 }
 
@@ -128,7 +127,7 @@ void convolution(rx_fifo_type * input_sig,float32_t * impulse_response_sig,float
 
 void plot_signal_UART(float32_t* sig,uint32_t length_signal){
 	for(uint32_t counter=0; counter<length_signal;counter++){
-			printf("%ld\r\n",(int32_t) sig[counter]);
+			printf("%ld\r\n",(uint32_t) sig[counter]);
 			pseuodo_delay(20000);
 			}
 }
